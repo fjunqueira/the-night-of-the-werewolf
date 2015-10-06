@@ -23,7 +23,7 @@ Player* player;
 
 std::vector<GameObject*> gameObjects;
 
-unsigned int points;
+int points;
 
 void postRedisplay()
 {
@@ -71,13 +71,27 @@ void disableUnneededPixelOperations()
 
 }
 
+void displayText(float x, float y, int r, int g, int b, std::string string) {
+	int j = string.length();
+
+	glColor3f(r, g, b);
+	glRasterPos2f(x, y);
+	for (int i = 0; i < j; i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, string[i]);
+	}
+}
+
 void gameover(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	disableUnneededPixelOperations();
 
+	glRasterPos2f(-1, -1);
 	glDrawPixels(gameoverBackground->getWidth(), gameoverBackground->getHeight(), GL_BGRA_EXT, GL_UNSIGNED_BYTE,
 		gameoverBackground->getPixels());
+
+	auto pointsText = "SCORE: " + std::to_string(points);
+	displayText(-0.15, 0.7, 1, 0, 0, pointsText);
 
 	glutSwapBuffers();
 }
@@ -111,8 +125,10 @@ void display(void)
 		gameoverBackground = new Image(viewport.getWidth(), viewport.getHeight(), viewport.getPixels());
 		gameoverText->plotTo(gameoverBackground);
 		glutDisplayFunc(gameover);
+		return;
 	}
 
+	glRasterPos2f(-1, -1);
 	glDrawPixels(viewport.getWidth(), viewport.getHeight(), GL_BGRA_EXT, GL_UNSIGNED_BYTE,
 		viewport.getPixels());
 
@@ -143,26 +159,29 @@ void keyboard(unsigned char key, int x, int y)
 
 void CALLBACK addEnemy(HWND hwnd, UINT uMsg, UINT timerId, DWORD dwTime)
 {
-	points++;
-
-	Image** idleCopSprites = new Image*[10]
+	if (!player->isDead())
 	{
-		manager.getAsset("idle_cop_1"),
-		manager.getAsset("idle_cop_2"),
-		manager.getAsset("idle_cop_3"),
-		manager.getAsset("idle_cop_4"),
-		manager.getAsset("idle_cop_5"),
-		manager.getAsset("idle_cop_6"),
-		manager.getAsset("idle_cop_7"),
-		manager.getAsset("idle_cop_8"),
-		manager.getAsset("idle_cop_9"),
-		manager.getAsset("idle_cop_10"),
-	};
+		points++;
 
-	if (rand() % 2 > 0)
-		gameObjects.push_back(new Cop(Animation(10, idleCopSprites), Vector2(background->getWidth(), 85), 3, player));
-	else
-		gameObjects.push_back(new Cop(Animation(10, idleCopSprites), Vector2(background->getWidth(), 85), 5, player));
+		Image** idleCopSprites = new Image*[10]
+		{
+			manager.getAsset("idle_cop_1"),
+			manager.getAsset("idle_cop_2"),
+			manager.getAsset("idle_cop_3"),
+			manager.getAsset("idle_cop_4"),
+			manager.getAsset("idle_cop_5"),
+			manager.getAsset("idle_cop_6"),
+			manager.getAsset("idle_cop_7"),
+			manager.getAsset("idle_cop_8"),
+			manager.getAsset("idle_cop_9"),
+			manager.getAsset("idle_cop_10"),
+		};
+
+		if (rand() % 2 > 0)
+			gameObjects.push_back(new Cop(Animation(10, idleCopSprites), Vector2(background->getWidth(), 85), 3, player));
+		else
+			gameObjects.push_back(new Cop(Animation(10, idleCopSprites), Vector2(background->getWidth(), 85), 5, player));
+	}
 }
 
 void initGameData()
