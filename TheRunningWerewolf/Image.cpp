@@ -50,9 +50,11 @@ void Image::extractAndPlotTo(Image* dest, int plotStartingX, int plotStartingY, 
 				dest->setPixel(pixel, currentPlotX, currentPlotY);
 			else
 			{
-				unsigned char r = this->applyTransparency(pixel >> 16, alpha);
-				unsigned char g = this->applyTransparency(pixel >> 8, alpha);
-				unsigned char b = this->applyTransparency(pixel, alpha);
+				auto channel2 = dest->getPixel(currentPlotX, currentPlotY);
+
+				unsigned char r = this->applyTransparency(channel2, pixel >> 16, alpha);
+				unsigned char g = this->applyTransparency(channel2, pixel >> 8, alpha);
+				unsigned char b = this->applyTransparency(channel2, pixel, alpha);
 
 				dest->setPixel(r << 16 | g << 8 | b, currentPlotX, currentPlotY);
 			}
@@ -100,9 +102,9 @@ bool Image::positionOutOfBounds(int posX, int posY)
 	return !(posX >= 0 && posX < this->width && posY >= 0 && posY < this->height);
 }
 
-unsigned char Image::applyTransparency(unsigned char channel, unsigned char alpha)
+unsigned char Image::applyTransparency(unsigned char channel1, unsigned char channel2, unsigned char alpha)
 {
-	return channel * alpha + 100 * (1 - alpha);
+	return channel1 * (1 - alpha) + channel2 * alpha;
 }
 
 void Image::setPixel(int rgb, int x, int y)

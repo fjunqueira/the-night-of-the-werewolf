@@ -9,7 +9,7 @@ private:
 
 	int width, height;
 
-	unsigned char applyTransparency(unsigned char channel, unsigned char alpha);
+	unsigned char applyTransparency(unsigned char channel1, unsigned char channel2, unsigned char alpha);
 
 	bool positionOutOfBounds(int posX, int posY);
 
