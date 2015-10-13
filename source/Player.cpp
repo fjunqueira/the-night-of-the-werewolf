@@ -1,6 +1,4 @@
 #include "Player.h"
-#include "Animation.h"
-#include "GameObject.h"
 
 Player::Player(Animation running, Animation jumping) : GameObject(), running(running), jumping(jumping), current(running)
 {

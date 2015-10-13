@@ -21,9 +21,7 @@ class ImageLoader
 public:
 	ImageLoader();
 
-	PTMInfo loadPTM(char* filePath);
-
-	PTMInfo writePTM(PTMInfo image, char * filePath);
+	PTMInfo loadPTM(const char* filePath);
 
 	~ImageLoader();
 };

@@ -1,14 +1,13 @@
+#include <unistd.h>
 #include "ImageLoader.h"
 
 ImageLoader::ImageLoader()
 {
 }
 
-PTMInfo ImageLoader::loadPTM(char* filePath)
+PTMInfo ImageLoader::loadPTM(const char* filePath)
 {
 	auto ptmInfo = PTMInfo();
-
-	string line;
 
 	ifstream file(filePath, ios::binary);
 
@@ -54,7 +53,7 @@ PTMInfo ImageLoader::loadPTM(char* filePath)
 
 	else cout << "Unable to open file";
 
-	throw std::exception("Unable to open file");
+	throw std::exception();
 }
 
 ImageLoader::~ImageLoader()
