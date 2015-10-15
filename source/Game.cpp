@@ -163,10 +163,10 @@ void addEnemy() {
 
         if (rand() % 2 > 0)
             gameObjects.push_back(
-                    new Cop(Animation(10, idleCopSprites), Vector2(background->getWidth(), 85), 3, player));
+                    new Cop(Animation(10, idleCopSprites), Vector2(background->getWidth(), 85), 5, player));
         else
             gameObjects.push_back(
-                    new Cop(Animation(10, idleCopSprites), Vector2(background->getWidth(), 85), 5, player));
+                    new Cop(Animation(10, idleCopSprites), Vector2(background->getWidth(), 85), 7, player));
     }
 }
 
@@ -193,9 +193,11 @@ void initGameData() {
     background = manager->getAsset("background");
     gameoverText = manager->getAsset("gameover");
 
-    gameObjects.push_back(new Layer(manager->getAsset("largeBushes"), Vector2(0, 105), 1));
-    gameObjects.push_back(new Layer(manager->getAsset("smallBushes"), Vector2(0, 85), 2));
-    gameObjects.push_back(new Layer(manager->getAsset("floor"), Vector2(0, 0), 4));
+    gameObjects.push_back(new Layer(manager->getAsset("mountains"), Vector2(0, 145), 1));
+    gameObjects.push_back(new Layer(manager->getAsset("trees"), Vector2(0, 125), 2));
+    gameObjects.push_back(new Layer(manager->getAsset("largeBushes"), Vector2(0, 105), 3));
+    gameObjects.push_back(new Layer(manager->getAsset("smallBushes"), Vector2(0, 85), 4));
+    gameObjects.push_back(new Layer(manager->getAsset("floor"), Vector2(0, 0), 6));
 
     Image **runningSprites = new Image *[8]
             {

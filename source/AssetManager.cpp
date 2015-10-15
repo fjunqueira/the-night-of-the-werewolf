@@ -14,6 +14,11 @@ void AssetManager::loadAssets() {
                                                                                        "../assets/Scenery/MiddleGround/4_extended.ptm")));
     this->assets.insert(std::pair<std::string, Image *>("largeBushes", this->loadImage(&loader,
                                                                                        "../assets/Scenery/MiddleGround/3_extended.ptm")));
+    this->assets.insert(std::pair<std::string, Image *>("trees", this->loadImage(&loader,
+                                                                                       "../assets/Scenery/MiddleGround/2_extended.ptm")));
+    this->assets.insert(std::pair<std::string, Image *>("mountains", this->loadImage(&loader,
+                                                                                       "../assets/Scenery/MiddleGround/1_extended.ptm")));
+
     this->assets.insert(
             std::pair<std::string, Image *>("gameover", this->loadImage(&loader, "../assets/GameOver.ptm")));
 

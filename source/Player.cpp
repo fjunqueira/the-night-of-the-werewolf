@@ -51,7 +51,7 @@ void Player::update(int speed)
 		if (this->position.y >= maxHeight)
 		{
 			this->falling = true;
-			this->zindex = zindex == 3 ? 5 : 3;
+			this->zindex = zindex == 5 ? 7 : 5;
 
 			//clamps the position to the max height
 			this->position.y = this->getMaxHeight(this->zindex);
@@ -71,12 +71,12 @@ void Player::update(int speed)
 
 int Player::getMaxHeight(int zindex)
 {
-	return zindex == 3 ? 210 : 205;
+	return zindex == 5 ? 210 : 205;
 }
 
 int Player::getMinHeight(int zindex)
 {
-	return zindex == 5 ? 90 : 85;
+	return zindex == 7 ? 90 : 85;
 }
 
 void Player::plotTo(Image * destination)
